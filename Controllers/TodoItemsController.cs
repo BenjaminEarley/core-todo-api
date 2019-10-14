@@ -22,7 +22,7 @@ namespace TodoApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems()
         {
-            return await _service.Get();
+            return Ok(await _service.Get());
         }
 
         // GET: api/TodoItems/5
@@ -36,7 +36,7 @@ namespace TodoApi.Controllers
                 return NotFound();
             }
 
-            return todoItem;
+            return Ok(todoItem);
         }
 
         // PUT: api/TodoItems/5

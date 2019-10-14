@@ -17,7 +17,7 @@ namespace TodoApi.Services
             _todos = database.GetCollection<TodoItem>(settings.TodosCollectionName);
         }
 
-        async public Task<List<TodoItem>> Get() =>
+        async public Task<IEnumerable<TodoItem>> Get() =>
             await _todos.Find(todo => true).ToListAsync();
 
         async public Task<TodoItem> Get(string id) =>
