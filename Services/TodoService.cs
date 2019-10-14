@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace TodoApi.Services
 {
-    public class TodoService
+    public class TodoService : ITodoService
     {
         private readonly IMongoCollection<TodoItem> _todos;
 
@@ -37,5 +37,15 @@ namespace TodoApi.Services
 
         async public Task Remove(string id) =>
             await _todos.DeleteOneAsync(todo => todo.Id == id);
+    }
+
+    public interface ITodoService
+    {
+        Task<TodoItem> Create(TodoItem todo);
+        Task<IEnumerable<TodoItem>> Get();
+        Task<TodoItem> Get(string id);
+        Task Remove(TodoItem todoIn);
+        Task Remove(string id);
+        Task Update(string id, TodoItem todoIn);
     }
 }
