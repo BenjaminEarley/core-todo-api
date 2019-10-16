@@ -11,25 +11,25 @@ namespace TodoApi.Controllers
     [ApiController]
     public class ListsController : ControllerBase
     {
-        private readonly ListsRepository _service;
+        private readonly ListsRepository _repository;
 
         public ListsController(ListsRepository service)
         {
-            _service = service;
+            _repository = service;
         }
 
         // GET: api/Lists
         [HttpGet]
         public async Task<ActionResult<IEnumerable<List>>> GetLists()
         {
-            return Ok(await _service.Get());
+            return Ok(await _repository.Get());
         }
 
         // GET: api/Lists/5
         [HttpGet("{id}")]
         public async Task<ActionResult<List>> GetList(string id)
         {
-            var todoList = await _service.Get(id);
+            var todoList = await _repository.Get(id);
 
             if (todoList == null)
             {
@@ -50,7 +50,7 @@ namespace TodoApi.Controllers
                 return BadRequest();
             }
 
-            await _service.Update(id, todoList);
+            await _repository.Update(id, todoList);
 
             return NoContent();
         }
@@ -61,7 +61,7 @@ namespace TodoApi.Controllers
         [HttpPost]
         public async Task<ActionResult<List>> PostList(List todoList)
         {
-            await _service.Create(todoList);
+            await _repository.Create(todoList);
 
             return CreatedAtAction(nameof(GetList), new { id = todoList.Id }, todoList);
         }
@@ -70,13 +70,13 @@ namespace TodoApi.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<List>> DeleteList(string id)
         {
-            var todoList = await _service.Get(id);
+            var todoList = await _repository.Get(id);
             if (todoList == null)
             {
                 return NotFound();
             }
 
-            await _service.Remove(todoList);
+            await _repository.Remove(todoList);
 
             return NoContent();
         }

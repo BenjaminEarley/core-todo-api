@@ -11,25 +11,25 @@ namespace TodoApi.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly UserRepository _service;
+        private readonly UserRepository _repository;
 
         public UsersController(UserRepository service)
         {
-            _service = service;
+            _repository = service;
         }
 
         // GET: api/Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return Ok(await _service.Get());
+            return Ok(await _repository.Get());
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(string id)
         {
-            var User = await _service.Get(id);
+            var User = await _repository.Get(id);
 
             if (User == null)
             {
@@ -50,7 +50,7 @@ namespace TodoApi.Controllers
                 return BadRequest();
             }
 
-            await _service.Update(id, User);
+            await _repository.Update(id, User);
 
             return NoContent();
         }
@@ -61,7 +61,7 @@ namespace TodoApi.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User User)
         {
-            await _service.Create(User);
+            await _repository.Create(User);
 
             return CreatedAtAction(nameof(GetUser), new { id = User.Id }, User);
         }
@@ -70,13 +70,13 @@ namespace TodoApi.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<User>> DeleteUser(string id)
         {
-            var User = await _service.Get(id);
+            var User = await _repository.Get(id);
             if (User == null)
             {
                 return NotFound();
             }
 
-            await _service.Remove(User);
+            await _repository.Remove(User);
 
             return NoContent();
         }
