@@ -4,13 +4,13 @@ using MongoDB.Driver;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
-namespace TodoApi.Services
+namespace TodoApi.Repositories
 {
-    public class UserService : IUserService
+    public class UserRepository : IUserRepository
     {
         private readonly IMongoCollection<User> _users;
 
-        public UserService(ITodoAppDatabaseSettings settings)
+        public UserRepository(ITodoAppDatabaseSettings settings)
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
@@ -40,7 +40,7 @@ namespace TodoApi.Services
             await _users.DeleteOneAsync(user => user.Id == id);
     }
 
-    public interface IUserService
+    public interface IUserRepository
     {
         Task<User> Create(User user);
         Task<IEnumerable<User>> Get();

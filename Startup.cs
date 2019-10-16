@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Options;
-using TodoApi.Services;
+using TodoApi.Repositories;
 using TodoApi.Databases;
 
 namespace TodoApi
@@ -26,8 +26,8 @@ namespace TodoApi
                 Configuration.GetSection(nameof(TodoAppDatabaseSettings)));
             services.AddSingleton<ITodoAppDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<TodoAppDatabaseSettings>>().Value);
-            services.AddSingleton<TodoService>();
-            services.AddSingleton<UserService>();
+            services.AddSingleton<ListsRepository>();
+            services.AddSingleton<UserRepository>();
 
             services.AddControllers()
                 .AddNewtonsoftJson(options => options.UseMemberCasing());

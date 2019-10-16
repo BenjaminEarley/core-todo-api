@@ -9,74 +9,74 @@ namespace TodoApi.Controllers
     [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class ListsController : ControllerBase
     {
-        private readonly UserRepository _service;
+        private readonly ListsRepository _service;
 
-        public UsersController(UserRepository service)
+        public ListsController(ListsRepository service)
         {
             _service = service;
         }
 
-        // GET: api/Users
+        // GET: api/TodoLists
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<TodoList>>> GetTodoLists()
         {
             return Ok(await _service.Get());
         }
 
-        // GET: api/Users/5
+        // GET: api/TodoLists/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(string id)
+        public async Task<ActionResult<TodoList>> GetTodoList(string id)
         {
-            var User = await _service.Get(id);
+            var todoList = await _service.Get(id);
 
-            if (User == null)
+            if (todoList == null)
             {
                 return NotFound();
             }
 
-            return Ok(User);
+            return Ok(todoList);
         }
 
-        // PUT: api/Users/5
+        // PUT: api/TodoLists/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(string id, User User)
+        public async Task<IActionResult> PutTodoList(string id, TodoList todoList)
         {
-            if (id != User.Id)
+            if (id != todoList.Id)
             {
                 return BadRequest();
             }
 
-            await _service.Update(id, User);
+            await _service.Update(id, todoList);
 
             return NoContent();
         }
 
-        // POST: api/Users
+        // POST: api/TodoLists
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User User)
+        public async Task<ActionResult<TodoList>> PostTodoList(TodoList todoList)
         {
-            await _service.Create(User);
+            await _service.Create(todoList);
 
-            return CreatedAtAction(nameof(GetUser), new { id = User.Id }, User);
+            return CreatedAtAction(nameof(GetTodoList), new { id = todoList.Id }, todoList);
         }
 
-        // DELETE: api/Users/5
+        // DELETE: api/TodoLists/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<User>> DeleteUser(string id)
+        public async Task<ActionResult<TodoList>> DeleteTodoList(string id)
         {
-            var User = await _service.Get(id);
-            if (User == null)
+            var todoList = await _service.Get(id);
+            if (todoList == null)
             {
                 return NotFound();
             }
 
-            await _service.Remove(User);
+            await _service.Remove(todoList);
 
             return NoContent();
         }
