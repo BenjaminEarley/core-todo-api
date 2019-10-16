@@ -5,7 +5,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace TodoApi.Models
 {
-    public class TodoItem
+    public class List
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
@@ -16,5 +16,10 @@ namespace TodoApi.Models
 
         [DefaultValue(false)]
         public bool IsComplete { get; set; }
+
+        public Item[] Items { get; set; }
+
+        [Required]
+        public string OwnerId { get; set; }
     }
 }

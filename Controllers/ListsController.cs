@@ -18,16 +18,16 @@ namespace TodoApi.Controllers
             _service = service;
         }
 
-        // GET: api/TodoLists
+        // GET: api/Lists
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TodoList>>> GetTodoLists()
+        public async Task<ActionResult<IEnumerable<List>>> GetLists()
         {
             return Ok(await _service.Get());
         }
 
-        // GET: api/TodoLists/5
+        // GET: api/Lists/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TodoList>> GetTodoList(string id)
+        public async Task<ActionResult<List>> GetList(string id)
         {
             var todoList = await _service.Get(id);
 
@@ -39,11 +39,11 @@ namespace TodoApi.Controllers
             return Ok(todoList);
         }
 
-        // PUT: api/TodoLists/5
+        // PUT: api/Lists/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTodoList(string id, TodoList todoList)
+        public async Task<IActionResult> PutList(string id, List todoList)
         {
             if (id != todoList.Id)
             {
@@ -55,20 +55,20 @@ namespace TodoApi.Controllers
             return NoContent();
         }
 
-        // POST: api/TodoLists
+        // POST: api/Lists
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<TodoList>> PostTodoList(TodoList todoList)
+        public async Task<ActionResult<List>> PostList(List todoList)
         {
             await _service.Create(todoList);
 
-            return CreatedAtAction(nameof(GetTodoList), new { id = todoList.Id }, todoList);
+            return CreatedAtAction(nameof(GetList), new { id = todoList.Id }, todoList);
         }
 
-        // DELETE: api/TodoLists/5
+        // DELETE: api/Lists/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<TodoList>> DeleteTodoList(string id)
+        public async Task<ActionResult<List>> DeleteList(string id)
         {
             var todoList = await _service.Get(id);
             if (todoList == null)
