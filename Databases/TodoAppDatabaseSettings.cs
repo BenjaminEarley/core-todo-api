@@ -1,4 +1,4 @@
-namespace TodoApi.Models
+namespace TodoApi.Databases
 {
     public class TodoAppDatabaseSettings : ITodoAppDatabaseSettings
     {
