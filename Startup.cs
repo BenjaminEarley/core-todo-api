@@ -27,6 +27,7 @@ namespace TodoApi
             services.AddSingleton<ITodoAppDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<TodoAppDatabaseSettings>>().Value);
             services.AddSingleton<TodoService>();
+            services.AddSingleton<UserService>();
 
             services.AddControllers()
                 .AddNewtonsoftJson(options => options.UseMemberCasing());
